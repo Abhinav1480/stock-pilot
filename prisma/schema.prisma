@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -40,6 +41,7 @@ model User {
   sessions      Session[]
   auditLogs     AuditLog[]
   notifications Notification[]
+  aiExtractions AiExtraction[]
 
   @@index([organizationId])
   @@index([email])
@@ -108,6 +110,7 @@ model Organization {
   salesOrders    SalesOrder[]
   auditLogs      AuditLog[]
   notifications  Notification[]
+  aiExtractions  AiExtraction[]
 
   @@index([slug])
 }
@@ -447,3 +450,21 @@ model Notification {
   @@index([userId, isRead])
   @@index([organizationId])
 }
+
+model AiExtraction {
+  id             String       @id @default(cuid())
+  imageUrl       String?
+  sourceType     String       // "IMAGE" | "INVOICE" | "BARCODE"
+  extractedData  Json
+  confidence     Json
+  createdAt      DateTime     @default(now())
+
+  userId         String
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([organizationId])
+}
+

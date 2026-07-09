@@ -4,12 +4,13 @@ import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
-import { Plus, Download, MoreHorizontal, Edit, Trash2, Eye } from "lucide-react";
+import { Plus, Download, MoreHorizontal, Edit, Trash2, Eye, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 
 import { PageHeader } from "@/components/shared/page-header";
 import { DataTable, type Column } from "@/components/shared/data-table";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
+import { AiAddProductDialog } from "@/components/inventory/ai-product-dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -55,6 +56,7 @@ export default function ProductsPage() {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("");
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [aiDialogOpen, setAiDialogOpen] = useState(false);
 
   const { data, isLoading } = useQuery({
     queryKey: ["products", page, pageSize, search, statusFilter],
@@ -199,14 +201,26 @@ export default function ProductsPage() {
         title="Products"
         description={`${data?.meta?.total ?? 0} products in your inventory`}
         actions={
-          <Button asChild>
-            <Link href="/inventory/products/new">
-              <Plus className="mr-2 h-4 w-4" />
-              Add Product
-            </Link>
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setAiDialogOpen(true)}
+              className="border-primary/20 text-primary hover:bg-primary/5 hover:text-primary transition-all duration-300"
+            >
+              <Sparkles className="mr-2 h-4 w-4 text-primary animate-pulse" />
+              AI Add Product
+            </Button>
+            <Button asChild>
+              <Link href="/inventory/products/new">
+                <Plus className="mr-2 h-4 w-4" />
+                Add Product
+              </Link>
+            </Button>
+          </div>
         }
       />
+
+      <AiAddProductDialog open={aiDialogOpen} onOpenChange={setAiDialogOpen} />
 
       <DataTable
         columns={columns}

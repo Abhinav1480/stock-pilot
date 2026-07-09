@@ -42,8 +42,9 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useCurrentUser, useMobile, useCommandK } from "@/hooks";
-import { getInitials, APP_NAME } from "@/lib/constants";
+import { APP_NAME } from "@/lib/constants";
 import { CommandPalette } from "@/components/shared/command-palette";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -363,17 +364,50 @@ export function AppHeader({
           </Button>
 
           {/* Notifications */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="relative h-8 w-8"
-            aria-label="Notifications"
-          >
-            <Bell className="h-4 w-4" />
-            <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[9px] font-bold text-primary-foreground">
-              3
-            </span>
-          </Button>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="relative h-8 w-8"
+                aria-label="Notifications"
+              >
+                <Bell className="h-4 w-4" />
+                <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[9px] font-bold text-primary-foreground">
+                  3
+                </span>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent align="end" className="w-80 p-0">
+              <div className="flex items-center justify-between border-b border-border/50 px-4 py-2.5">
+                <span className="text-xs font-semibold">Notifications</span>
+                <Badge variant="outline" className="text-[10px]">3 New</Badge>
+              </div>
+              <div className="max-h-64 overflow-y-auto p-1 space-y-1">
+                <div className="flex flex-col gap-1 rounded-md p-2 hover:bg-accent text-xs">
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-foreground">Low Stock Alert</span>
+                    <span className="text-[10px] text-muted-foreground">5m ago</span>
+                  </div>
+                  <p className="text-muted-foreground">Product "Wireless Keyboard" is below minimum threshold in Warehouse A.</p>
+                </div>
+                <div className="flex flex-col gap-1 rounded-md p-2 hover:bg-accent text-xs">
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-foreground">Purchase Order Received</span>
+                    <span className="text-[10px] text-muted-foreground">1h ago</span>
+                  </div>
+                  <p className="text-muted-foreground">PO #1002 has been marked as confirmed by Supplier Inc.</p>
+                </div>
+                <div className="flex flex-col gap-1 rounded-md p-2 hover:bg-accent text-xs">
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-foreground">Transfer Completed</span>
+                    <span className="text-[10px] text-muted-foreground">2h ago</span>
+                  </div>
+                  <p className="text-muted-foreground">150 units of "USB-C Cable" transferred from Main to Secondary Zone.</p>
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
         </div>
       </header>
 

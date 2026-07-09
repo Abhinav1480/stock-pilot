@@ -9,8 +9,10 @@ function Popover({ ...props }: PopoverPrimitive.Root.Props) {
   return <PopoverPrimitive.Root data-slot="popover" {...props} />
 }
 
-function PopoverTrigger({ ...props }: PopoverPrimitive.Trigger.Props) {
-  return <PopoverPrimitive.Trigger data-slot="popover-trigger" {...props} />
+import { Slot } from "@radix-ui/react-slot"
+
+function PopoverTrigger({ asChild, ...props }: PopoverPrimitive.Trigger.Props & { asChild?: boolean }) {
+  return <PopoverPrimitive.Trigger render={asChild ? <Slot /> : undefined} data-slot="popover-trigger" {...props} />
 }
 
 function PopoverContent({
