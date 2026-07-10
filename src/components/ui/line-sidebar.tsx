@@ -77,44 +77,50 @@ export function LineSidebar({
   const smoothingRef = useRef<number>(smoothing);
   const [activeIndex, setActiveIndex] = useState<number | null>(defaultActive);
 
-  activeRef.current = activeIndex;
-  smoothingRef.current = smoothing;
+  useEffect(() => {
+    activeRef.current = activeIndex;
+  }, [activeIndex]);
 
-  // Single rAF loop that eases every item's --effect toward its target using
-  // frame-rate independent exponential smoothing, so color, shift and scale
-  // all move together without staggering CSS transitions.
-  const runFrame = useCallback((now: number) => {
-    const dt = Math.min((now - lastRef.current) / 1000, 0.05);
-    lastRef.current = now;
-    const tau = Math.max(smoothingRef.current, 1) / 1000;
-    const k = 1 - Math.exp(-dt / tau);
+  useEffect(() => {
+    smoothingRef.current = smoothing;
+  }, [smoothing]);
 
-    let moving = false;
-    const itemsList = itemRefs.current;
-    for (let i = 0; i < itemsList.length; i++) {
-      const el = itemsList[i];
-      if (!el) continue;
-      const target = Math.max(
-        targetsRef.current[i] || 0,
-        activeRef.current === i ? 1 : 0
-      );
-      const cur = currentRef.current[i] || 0;
-      const next = cur + (target - cur) * k;
-      const settled = Math.abs(target - next) < 0.0015;
-      const value = settled ? target : next;
-      currentRef.current[i] = value;
-      el.style.setProperty("--effect", value.toFixed(4));
-      if (!settled) moving = true;
-    }
+  const runFrameRef = useRef<(now: number) => void>(() => {});
 
-    rafRef.current = moving ? requestAnimationFrame(runFrame) : null;
+  useEffect(() => {
+    runFrameRef.current = (now: number) => {
+      const dt = Math.min((now - lastRef.current) / 1000, 0.05);
+      lastRef.current = now;
+      const tau = Math.max(smoothingRef.current, 1) / 1000;
+      const k = 1 - Math.exp(-dt / tau);
+
+      let moving = false;
+      const itemsList = itemRefs.current;
+      for (let i = 0; i < itemsList.length; i++) {
+        const el = itemsList[i];
+        if (!el) continue;
+        const target = Math.max(
+          targetsRef.current[i] || 0,
+          activeRef.current === i ? 1 : 0
+        );
+        const cur = currentRef.current[i] || 0;
+        const next = cur + (target - cur) * k;
+        const settled = Math.abs(target - next) < 0.0015;
+        const value = settled ? target : next;
+        currentRef.current[i] = value;
+        el.style.setProperty("--effect", value.toFixed(4));
+        if (!settled) moving = true;
+      }
+
+      rafRef.current = moving ? requestAnimationFrame(runFrameRef.current) : null;
+    };
   }, []);
 
   const startLoop = useCallback(() => {
     if (rafRef.current != null) return;
     lastRef.current = performance.now();
-    rafRef.current = requestAnimationFrame(runFrame);
-  }, [runFrame]);
+    rafRef.current = requestAnimationFrame(runFrameRef.current);
+  }, []);
 
   const handlePointerMove = useCallback(
     (e: React.PointerEvent<HTMLUListElement>) => {

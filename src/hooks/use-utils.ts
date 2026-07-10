@@ -43,20 +43,25 @@ export function useLocalStorage<T>(
   return [storedValue, setValue];
 }
 
+import { useSyncExternalStore } from "react";
+
 export function useMediaQuery(query: string): boolean {
-  const [matches, setMatches] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const media = window.matchMedia(query);
-    setMatches(media.matches);
-
-    const listener = (event: MediaQueryListEvent) => setMatches(event.matches);
-    media.addEventListener("change", listener);
-    return () => media.removeEventListener("change", listener);
-  }, [query]);
-
-  return matches;
+  return useSyncExternalStore(
+    useCallback(
+      (callback) => {
+        if (typeof window === "undefined") return () => {};
+        const media = window.matchMedia(query);
+        media.addEventListener("change", callback);
+        return () => media.removeEventListener("change", callback);
+      },
+      [query]
+    ),
+    () => {
+      if (typeof window === "undefined") return false;
+      return window.matchMedia(query).matches;
+    },
+    () => false
+  );
 }
 
 export function useMobile(): boolean {
