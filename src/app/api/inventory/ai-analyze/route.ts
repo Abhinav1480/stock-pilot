@@ -1,5 +1,4 @@
 import { NextRequest } from "next/server";
-import { GoogleGenAI } from "@google/genai";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";

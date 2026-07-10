@@ -88,15 +88,15 @@ export function WarehouseForm({ initialData, mode }: WarehouseFormProps) {
                 <div className="space-y-2">
                   <Label htmlFor="name">Warehouse Name *</Label>
                   <Input id="name" placeholder="Main Warehouse" {...register("name")} />
-                  {errors.name && (
-                    <p className="text-xs text-destructive">{errors.name.message}</p>
+                  {errors.name?.message && (
+                    <p className="text-xs text-destructive">{errors.name.message as string}</p>
                   )}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="code">Code / Identifier *</Label>
                   <Input id="code" placeholder="WH-01" {...register("code")} />
-                  {errors.code && (
-                    <p className="text-xs text-destructive">{errors.code.message}</p>
+                  {errors.code?.message && (
+                    <p className="text-xs text-destructive">{errors.code.message as string}</p>
                   )}
                 </div>
               </div>
@@ -161,8 +161,8 @@ export function WarehouseForm({ initialData, mode }: WarehouseFormProps) {
                   step="1"
                   {...register("capacity", { valueAsNumber: true })}
                 />
-                {errors.capacity && (
-                  <p className="text-xs text-destructive">{errors.capacity.message}</p>
+                {errors.capacity?.message && (
+                  <p className="text-xs text-destructive">{errors.capacity.message as string}</p>
                 )}
                 <p className="text-xs text-muted-foreground">Maximum total items this warehouse can hold (0 for unlimited).</p>
               </div>

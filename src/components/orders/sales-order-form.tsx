@@ -28,6 +28,7 @@ export function SalesOrderForm() {
   });
 
   const { fields, append, remove } = useFieldArray({ control, name: "items" });
+  const itemErrors = errors.items as any;
   const items = watch("items");
   const tax = watch("tax") || 0;
 
@@ -63,12 +64,12 @@ export function SalesOrderForm() {
               <div className="space-y-2">
                 <Label>Customer Name *</Label>
                 <Input placeholder="John Doe" {...register("customerName")} />
-                {errors.customerName && <p className="text-xs text-destructive">{errors.customerName.message}</p>}
+                 {errors.customerName?.message && <p className="text-xs text-destructive">{errors.customerName.message as string}</p>}
               </div>
               <div className="space-y-2">
                 <Label>Customer Email</Label>
                 <Input type="email" placeholder="john@example.com" {...register("customerEmail")} />
-                {errors.customerEmail && <p className="text-xs text-destructive">{errors.customerEmail.message}</p>}
+                 {errors.customerEmail?.message && <p className="text-xs text-destructive">{errors.customerEmail.message as string}</p>}
               </div>
             </CardContent>
           </Card>
@@ -92,7 +93,7 @@ export function SalesOrderForm() {
                         {products?.map((p: any) => <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>)}
                       </SelectContent>
                     </Select>
-                    {errors.items?.[index]?.productId && <p className="text-xs text-destructive">Required</p>}
+                     {itemErrors?.[index]?.productId && <p className="text-xs text-destructive">Required</p>}
                   </div>
                   <div className="w-24 space-y-2">
                     <Label>Qty</Label>

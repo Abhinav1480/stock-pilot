@@ -92,8 +92,8 @@ export function SupplierForm({ initialData, mode }: SupplierFormProps) {
               <div className="space-y-2">
                 <Label htmlFor="name">Company Name *</Label>
                 <Input id="name" placeholder="Acme Corp" {...register("name")} />
-                {errors.name && (
-                  <p className="text-xs text-destructive">{errors.name.message}</p>
+                {errors.name?.message && (
+                  <p className="text-xs text-destructive">{errors.name.message as string}</p>
                 )}
               </div>
 
@@ -105,8 +105,8 @@ export function SupplierForm({ initialData, mode }: SupplierFormProps) {
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
                   <Input id="email" type="email" placeholder="contact@acme.com" {...register("email")} />
-                  {errors.email && (
-                    <p className="text-xs text-destructive">{errors.email.message}</p>
+                  {errors.email?.message && (
+                    <p className="text-xs text-destructive">{errors.email.message as string}</p>
                   )}
                 </div>
                 <div className="space-y-2">
@@ -116,8 +116,8 @@ export function SupplierForm({ initialData, mode }: SupplierFormProps) {
                 <div className="space-y-2">
                   <Label htmlFor="website">Website</Label>
                   <Input id="website" placeholder="https://acme.com" {...register("website")} />
-                  {errors.website && (
-                    <p className="text-xs text-destructive">{errors.website.message}</p>
+                  {errors.website?.message && (
+                    <p className="text-xs text-destructive">{errors.website.message as string}</p>
                   )}
                 </div>
               </div>
@@ -182,8 +182,8 @@ export function SupplierForm({ initialData, mode }: SupplierFormProps) {
                   step="1"
                   {...register("rating", { valueAsNumber: true })}
                 />
-                {errors.rating && (
-                  <p className="text-xs text-destructive">{errors.rating.message}</p>
+                {errors.rating?.message && (
+                  <p className="text-xs text-destructive">{errors.rating.message as string}</p>
                 )}
               </div>
 

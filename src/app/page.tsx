@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { APP_NAME } from "@/lib/constants";
+import SpotlightCard from "@/components/ui/spotlight-card";
+import BorderGlow from "@/components/ui/border-glow";
 
 const features = [
   {
@@ -155,20 +157,23 @@ export default function LandingPage() {
           </div>
           <div className="mx-auto mt-16 grid max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((feature) => (
-              <div
+              <SpotlightCard
                 key={feature.title}
-                className="group relative rounded-xl border border-border/50 bg-card/80 p-6 backdrop-blur-sm transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
+                className="group transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 p-0! bg-card/80 backdrop-blur-sm"
+                spotlightColor="rgba(255, 255, 255, 0.15)"
               >
-                <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                  <feature.icon className="h-5 w-5" />
+                <div className="p-6">
+                  <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                    <feature.icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="mb-2 font-semibold tracking-tight">
+                    {feature.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    {feature.description}
+                  </p>
                 </div>
-                <h3 className="mb-2 font-semibold tracking-tight">
-                  {feature.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  {feature.description}
-                </p>
-              </div>
+              </SpotlightCard>
             ))}
           </div>
         </div>
@@ -177,39 +182,46 @@ export default function LandingPage() {
       {/* CTA */}
       <section className="border-t border-border/50">
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
-          <div className="relative mx-auto max-w-3xl overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 via-background to-chart-4/5 p-8 sm:p-12">
-            <div className="relative text-center">
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-                Ready to streamline your operations?
-              </h2>
-              <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-                Join thousands of businesses using StockPilot Pro to manage
-                their inventory efficiently.
-              </p>
-              <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-                <Button size="lg" asChild>
-                  <Link href="/register">
-                    Get Started Free
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-              <div className="mt-6 flex items-center justify-center gap-6 text-sm text-muted-foreground">
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                  No credit card
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                  14-day free trial
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                  Cancel anytime
-                </span>
+          <BorderGlow
+            className="mx-auto max-w-3xl"
+            glowColor="200 80 60"
+            backgroundColor="transparent"
+            animated={true}
+          >
+            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/5 via-background to-chart-4/5 p-8 sm:p-12">
+              <div className="relative text-center">
+                <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+                  Ready to streamline your operations?
+                </h2>
+                <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
+                  Join thousands of businesses using StockPilot Pro to manage
+                  their inventory efficiently.
+                </p>
+                <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+                  <Button size="lg" asChild>
+                    <Link href="/register">
+                      Get Started Free
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </div>
+                <div className="mt-6 flex items-center justify-center gap-6 text-sm text-muted-foreground">
+                  <span className="flex items-center gap-1.5">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                    No credit card
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                    14-day free trial
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                    Cancel anytime
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
+          </BorderGlow>
         </div>
       </section>
 

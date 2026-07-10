@@ -28,6 +28,7 @@ export function PurchaseOrderForm() {
   });
 
   const { fields, append, remove } = useFieldArray({ control, name: "items" });
+  const itemErrors = errors.items as any;
   const items = watch("items");
   const tax = watch("tax") || 0;
 
@@ -81,7 +82,7 @@ export function PurchaseOrderForm() {
                         {products?.map((p: any) => <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>)}
                       </SelectContent>
                     </Select>
-                    {errors.items?.[index]?.productId && <p className="text-xs text-destructive">Required</p>}
+                    {itemErrors?.[index]?.productId && <p className="text-xs text-destructive">Required</p>}
                   </div>
                   <div className="w-24 space-y-2">
                     <Label>Qty</Label>
@@ -116,7 +117,7 @@ export function PurchaseOrderForm() {
                     {suppliers?.map((s: any) => <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>)}
                   </SelectContent>
                 </Select>
-                {errors.supplierId && <p className="text-xs text-destructive">{errors.supplierId.message}</p>}
+                {errors.supplierId?.message && <p className="text-xs text-destructive">{errors.supplierId.message as string}</p>}
               </div>
 
               <div className="space-y-2">

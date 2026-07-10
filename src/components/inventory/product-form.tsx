@@ -122,9 +122,9 @@ export function ProductForm({ initialData, mode }: ProductFormProps) {
                     placeholder="Product name"
                     {...register("name")}
                   />
-                  {errors.name && (
+                  {errors.name?.message && (
                     <p className="text-xs text-destructive">
-                      {errors.name.message}
+                      {errors.name.message as string}
                     </p>
                   )}
                 </div>
@@ -145,9 +145,9 @@ export function ProductForm({ initialData, mode }: ProductFormProps) {
                       Generate
                     </Button>
                   </div>
-                  {errors.sku && (
+                  {errors.sku?.message && (
                     <p className="text-xs text-destructive">
-                      {errors.sku.message}
+                      {errors.sku.message as string}
                     </p>
                   )}
                 </div>
@@ -210,9 +210,9 @@ export function ProductForm({ initialData, mode }: ProductFormProps) {
                     placeholder="0.00"
                     {...register("costPrice")}
                   />
-                  {errors.costPrice && (
+                  {errors.costPrice?.message && (
                     <p className="text-xs text-destructive">
-                      {errors.costPrice.message}
+                      {errors.costPrice.message as string}
                     </p>
                   )}
                 </div>
@@ -226,9 +226,9 @@ export function ProductForm({ initialData, mode }: ProductFormProps) {
                     placeholder="0.00"
                     {...register("sellPrice")}
                   />
-                  {errors.sellPrice && (
+                  {errors.sellPrice?.message && (
                     <p className="text-xs text-destructive">
-                      {errors.sellPrice.message}
+                      {errors.sellPrice.message as string}
                     </p>
                   )}
                 </div>

@@ -206,7 +206,7 @@ export default function StockLevelsPage() {
         rowKey={(item) => item.id}
         filters={
           <div className="flex items-center gap-2">
-            <Select value={warehouseId} onValueChange={setWarehouseId}>
+            <Select value={warehouseId} onValueChange={(v) => setWarehouseId(v ?? "")}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="All Warehouses" />
               </SelectTrigger>

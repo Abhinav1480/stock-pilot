@@ -47,15 +47,25 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
+  render?: React.ReactElement
+  nativeButton?: boolean
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, render, nativeButton, ...props }, ref) => {
     const Comp = asChild ? Slot : ButtonPrimitive
+    
+    const optionalProps: Record<string, any> = {}
+    if (!asChild) {
+      if (render !== undefined) optionalProps.render = render
+      if (nativeButton !== undefined) optionalProps.nativeButton = nativeButton
+    }
+
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
+        {...optionalProps}
         {...props}
       />
     )

@@ -44,8 +44,8 @@ export function AnalyticsContent({ data }: { data: AnalyticsData }) {
                   <LineChart data={data.monthlyRevenue}>
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                     <XAxis dataKey="month" tick={{ fontSize: 11 }} tickLine={false} axisLine={false} />
-                    <YAxis tick={{ fontSize: 11 }} tickLine={false} axisLine={false} tickFormatter={(v: number) => `$${(v / 1000).toFixed(0)}k`} />
-                    <Tooltip contentStyle={tooltipStyle} formatter={(v: number) => formatCurrency(v)} />
+                    <YAxis tick={{ fontSize: 11 }} tickLine={false} axisLine={false} tickFormatter={(v: any) => `$${(Number(v) / 1000).toFixed(0)}k`} />
+                    <Tooltip contentStyle={tooltipStyle} formatter={(v: any) => formatCurrency(Number(v))} />
                     <Legend />
                     <Line type="monotone" dataKey="sales" name="Sales" stroke={CHART_COLORS[0]} strokeWidth={2} dot={{ r: 4 }} />
                     <Line type="monotone" dataKey="purchases" name="Purchases" stroke={CHART_COLORS[1]} strokeWidth={2} dot={{ r: 4 }} />
@@ -138,7 +138,7 @@ export function AnalyticsContent({ data }: { data: AnalyticsData }) {
                   <BarChart data={data.ordersByStatus}>
                     <XAxis dataKey="status" tick={{ fontSize: 11 }} tickLine={false} axisLine={false} />
                     <YAxis tick={{ fontSize: 11 }} tickLine={false} axisLine={false} />
-                    <Tooltip contentStyle={tooltipStyle} formatter={(v: number, name: string) => name === "total" ? formatCurrency(v) : v} />
+                    <Tooltip contentStyle={tooltipStyle} formatter={(v: any, name: any) => name === "total" ? formatCurrency(Number(v)) : v} />
                     <Bar dataKey="count" name="Count" fill={CHART_COLORS[0]} radius={[6, 6, 0, 0]} maxBarSize={48} />
                   </BarChart>
                 </ResponsiveContainer>

@@ -67,7 +67,7 @@ export default function RootLayout({
       <body className={`${inter.variable} font-sans antialiased`}>
         <AuthProvider>
           <Providers>
-            <TooltipProvider delayDuration={300}>
+            <TooltipProvider delay={300}>
               {children}
             </TooltipProvider>
           </Providers>

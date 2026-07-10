@@ -65,7 +65,7 @@ export async function logAudit(
         entityId,
         userId: context.userId,
         organizationId: context.organizationId,
-        metadata: metadata ?? undefined,
+        metadata: metadata ? (metadata as any) : undefined,
       },
     });
   } catch (error) {

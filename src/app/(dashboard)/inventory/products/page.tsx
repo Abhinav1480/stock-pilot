@@ -248,7 +248,7 @@ export default function ProductsPage() {
           <Select
             value={statusFilter}
             onValueChange={(v) => {
-              setStatusFilter(v === "all" ? "" : v);
+              setStatusFilter(v === "all" ? "" : (v ?? ""));
               setPage(1);
             }}
           >

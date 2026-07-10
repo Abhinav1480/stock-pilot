@@ -56,7 +56,7 @@ export default function CategoriesPage() {
     watch,
     formState: { errors },
   } = useForm<CategoryInput>({
-    resolver: zodResolver(categorySchema),
+    resolver: zodResolver(categorySchema) as any,
     defaultValues: { name: "", description: "", color: "#6366f1" },
   });
 
@@ -218,7 +218,7 @@ export default function CategoriesPage() {
             </DialogTitle>
           </DialogHeader>
           <form
-            onSubmit={handleSubmit((d) => mutation.mutate(d))}
+            onSubmit={handleSubmit((d) => mutation.mutate(d as CategoryInput))}
             className="space-y-4"
           >
             <div className="space-y-2">

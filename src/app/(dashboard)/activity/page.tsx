@@ -54,6 +54,16 @@ export default function ActivityPage() {
 
   const handleSearch = useCallback((q: string) => { setSearch(q); setPage(1); }, []);
 
+  const handleEntityChange = useCallback((value: string | null) => {
+    setEntityFilter(value === "all" || !value ? "" : value);
+    setPage(1);
+  }, []);
+
+  const handleActionChange = useCallback((value: string | null) => {
+    setActionFilter(value === "all" || !value ? "" : value);
+    setPage(1);
+  }, []);
+
   const columns: Column<AuditEntry>[] = [
     {
       key: "user",
@@ -125,7 +135,7 @@ export default function ActivityPage() {
         emptyMessage="No activity recorded yet"
         filters={
           <div className="flex items-center gap-2">
-            <Select value={entityFilter} onValueChange={(v) => { setEntityFilter(v === "all" ? "" : v); setPage(1); }}>
+            <Select value={entityFilter} onValueChange={handleEntityChange}>
               <SelectTrigger className="h-9 w-32"><SelectValue placeholder="Entity" /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Entities</SelectItem>
@@ -139,7 +149,7 @@ export default function ActivityPage() {
                 <SelectItem value="Organization">Organization</SelectItem>
               </SelectContent>
             </Select>
-            <Select value={actionFilter} onValueChange={(v) => { setActionFilter(v === "all" ? "" : v); setPage(1); }}>
+            <Select value={actionFilter} onValueChange={handleActionChange}>
               <SelectTrigger className="h-9 w-28"><SelectValue placeholder="Action" /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Actions</SelectItem>
